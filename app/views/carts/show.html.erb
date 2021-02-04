@@ -41,9 +41,9 @@
             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
             data-amount="<%= cart_subtotal_cents %>"
             data-name="Jungle"
-            data-description="Khurram Virani's Jungle Order"
+            data-description="Audrey Untung's Jungle Order"
             data-locale="auto"
-            data-email="kvirani@gmail.com"
+            data-email="audreyuu@gmail.com"
             data-currency="cad">
           </script>
         <% end %>
@@ -53,7 +53,7 @@
     <div class="alert alert-primary" role="alert">
       Your cart is empty! 
     </div>
-    <%= link_to 'Home', '/' %>
+    <%= link_to 'Home', root_path, class: 'btn btn-lg btn-primary' %>
   <% end %>
 
 </section>
