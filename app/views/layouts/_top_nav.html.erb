@@ -29,7 +29,11 @@
           </ul>
         </li>
       </ul>
+
       <ul class="nav navbar-nav navbar-right">
+
+      
+
        <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 
@@ -47,6 +51,17 @@
             <%= fa_icon "shopping-cart" %> My Cart (<%= cart.size %>)
           <% end %>
         </li>
+
+        <li>
+        <% if current_user %>
+        Signed in as <%= current_user.name %> | <%= link_to "Logout", '/logout' %>
+      <% else %>
+        <%= link_to 'Login', '/login' %> | <%= link_to 'Signup', '/signup' %>
+      <% end %>
+      
+      <%= yield %>
+        </li>
+        
       </ul>
     </div>
   </div>
