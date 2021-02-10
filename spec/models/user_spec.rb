@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'Validation: User' do
+  describe 'Validation:' do
     it "is valid with matching password and password_confirmation fields" do
       @user = User.new(
         first_name: "New",
@@ -98,4 +98,63 @@ RSpec.describe User, type: :model do
       expect(@user).to_not be_valid
     end
   end
+
+  describe '.authenticate_with_credentials' do
+    it "should return a user if user has correct authentication info" do
+      @user = User.new(
+        first_name: "New",
+        last_name: "User",
+        email: "test@test.com", 
+        password: "password123", 
+        password_confirmation: "password123")
+  
+      @user.save
+
+      login = User.authenticate_with_credentials('test@test.com', 'password123')
+      expect(login).to be_instance_of(User)
+    end
+    
+    it "should return nil if user has correct authentication info" do
+      @user = User.new(
+        first_name: "New",
+        last_name: "User",
+        email: "test@test.com", 
+        password: "password123", 
+        password_confirmation: "password123")
+  
+      @user.save
+
+      login = User.authenticate_with_credentials('test@test.com', 'passw23')
+      expect(login).to be_nil
+    end
+
+    it 'should successfully authenticate email with spaces' do
+      @user = User.new(
+        first_name: "New",
+        last_name: "User",
+        email: "test@test.com", 
+        password: "password123", 
+        password_confirmation: "password123")
+  
+      @user.save
+
+      login = User.authenticate_with_credentials(' test@test.com ', 'password123')
+      expect(login).to be_instance_of(User)
+    end
+
+    it 'should successfully authenticate email with wrong case' do
+      @user = User.new(
+        first_name: "New",
+        last_name: "User",
+        email: "test@test.com", 
+        password: "password123", 
+        password_confirmation: "password123")
+  
+      @user.save
+
+      login = User.authenticate_with_credentials('TEST@TEST.com', 'password123')
+      expect(login).to be_instance_of(User)
+    end
+  end
+
 end
